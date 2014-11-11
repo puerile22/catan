@@ -4,7 +4,7 @@ describe("Model: Player", function(){
   beforeEach(inject(function(_Player_){
     Player = Player;
   }));
-  
+
   beforeEach(function(){
     p = new Player.createPlayer('George');
   });
@@ -16,7 +16,17 @@ describe("Model: Player", function(){
   });
 
   it("can add and remove cards from their hand", function(){
-    p
+    expect(p.model.resources.sheep).toEqual(0);
+    p.addResource('sheep', 2);
+    expect(p.model.resources.sheep).toEqual(2);
+
+    p.useResource('sheep', 1);
+    expect(p.model.resources.sheep).toEqual(1);
+  });
+
+  it("raises a flag when a user has more than 7 cars", function(){
+    p.addResource('ore', 8);
+    expect(p.settings.moreThan7).toBeTruthy();
   });
 });
 
