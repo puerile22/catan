@@ -4,7 +4,7 @@ app.factory('Player', ['$route', function($route) {
 
   var settings = {
     
-  }
+  };
 
   function createPlayer(name) {
     this.name = name;
@@ -33,6 +33,10 @@ app.factory('Player', ['$route', function($route) {
 
   createPlayer.prototype.useResource = function(resource, amount) {
     this.resources[resource] -= amount;
+    if (this.resources[resource] <= 7) {
+      this.settings.moreThanSeven = false;
+    }
+
     return this;
   };
 
@@ -40,6 +44,6 @@ app.factory('Player', ['$route', function($route) {
     models: models,
     settings: settings,
     createPlayer: createPlayer
-  }
+  };
 
 }]);

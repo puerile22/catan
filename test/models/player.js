@@ -24,8 +24,20 @@ describe("Model: Player", function(){
     expect(p.resources.sheep).toEqual(1);
   });
 
-  it("raises a flag when a user has more than 7 cars", function(){
+  it("raises a flag when a user has more than 7 cards", function(){
     p.addResource('ore', 8);
     expect(p.settings.moreThanSeven).toBeTruthy();
+  });
+
+  it("when a user has more than 7 cards, it removes the extra back down to 7", function(){
+    p.addResource('ore', 8);
+    p.useResource('ore', 1);
+    expect(p.settings.moreThanSeven).toBeFalsy();
+  });
+
+  it("if no resource is passed into useResource, remove half your cards", function(){
+    p.addResource('wheat', 10);
+    p.useResource('wheat', 5);
+    expect(p.resources.wheat).toEqual(5);
   });
 });
