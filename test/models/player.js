@@ -37,7 +37,23 @@ describe("Model: Player", function(){
 
   it("if no resource is passed into useResource, remove half your cards", function(){
     p.addResource('wheat', 10);
-    p.useResource('wheat', 5);
+    spyOn(window, "prompt").and.returnValue("wheat");
+    amount = 5;
+    p.removeResource();
     expect(p.resources.wheat).toEqual(5);
   });
+
+  it("player has enough resources", function(){
+    p.addResource('brick', 10);
+    x = p.removeHelper('brick', 1, 5);
+    expect(x).toEqual(4);
+    x = p.removeHelper('brick', 4, 4);
+    expect(x).toEqual(0);
+  });
+
+  it ("player doesn't have enough resources", function() {
+    x = p.removeHelper('brick', 1);
+    expect(x.alert).toEqual("You do not have enough resources to do that");
+  });
+
 });

@@ -18,7 +18,7 @@ app.factory('Player', ['$route', function($route) {
     this.developmentCards = [],
     this.settings = {
       moreThanSeven: false
-    }
+    };
   };
 
   createPlayer.prototype.addResource = function(resource, amount) {
@@ -40,6 +40,32 @@ app.factory('Player', ['$route', function($route) {
     return this;
   };
 
+  createPlayer.prototype.removeResource = function() {
+    var count = 0;
+    for(var key in this.resources) {
+      count += this.resources[key];
+    }
+    count = Math.floor(count/2);
+    while (count !==0) {
+      var resource = prompt("Please input resource you want to remove");
+      // var amount = prompt("Please input the amount you want to remove");
+      // amount = parseInt(amount);
+      count = this.removeHelper(resource, amount, count);
+    }
+  };
+
+
+  createPlayer.prototype.removeHelper = function(resource, amount, count){
+    if (this.resources[resource] >= amount && amount <= count){
+      count -= amount;
+      this.resources[resource] -= amount;
+      return count;
+    } else {
+      return {alert: "You do not have enough resources to do that"};
+    }
+  };
+   
+ 
   return {
     models: models,
     settings: settings,
